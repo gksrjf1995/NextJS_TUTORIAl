@@ -16,7 +16,7 @@ function MeetupItem(props) {
         </div>
         <div className={classes.content}>
           <h3>{props.title}</h3>
-          <address>{props.address}</address>
+          <address>{props.address}GMTEST</address>
         </div>
         <div className={classes.actions}>
           <button onClick={LinktoOtherPage}>Show Details</button>
