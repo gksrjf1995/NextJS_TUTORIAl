@@ -11,7 +11,7 @@ const handle = async(req,res) =>{
             "mongodb+srv://nextjsHangeol:IFqWIBgDN3OzBzXM@cluster0.yq1jxon.mongodb.net/?retryWrites=true&w=majority"
             );
         
-            const db = client.db();
+        const db = client.db("Sibal");
     
         const meetupCollection = db.collection("meetups");
         const result = await meetupCollection.insertOne(data);
