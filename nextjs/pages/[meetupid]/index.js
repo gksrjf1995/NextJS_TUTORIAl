@@ -1,11 +1,24 @@
 import React from 'react'
-import { MongoClient } from 'mongodb';
+import { Fragment } from 'react';
+import Head from "next/head"
+import { MongoClient , ObjectId  } from 'mongodb';
 
 const index = (props) => {
-  console.log(props.sibal);
-
+  console.log(props.sibal.image);
+  
   return (
-    <div>meetupid{props.sibal}</div>
+    <Fragment>
+      <Head>
+        <title>MY First Next.js Tutorial</title>
+      </Head>
+      <div>
+        <h1> <p>{props.sibal.title}</p></h1>
+        <img src={props.sibal.image}/>
+        <p>{props.sibal.address}</p>
+        <p>{props.sibal.description}</p>
+      </div>
+    </Fragment>
+   
   )
 }
 
@@ -40,18 +53,28 @@ export const getStaticPaths = async () => {
 
 export async function getStaticProps(context){
   
-  console.log("context"); 
-  console.log(context); 
+  
+
+  const meetupId = context.params.meetupid
+  console.log(meetupId);
   const cliecnt = await MongoClient.connect("mongodb+srv://nextjsHangeol:IFqWIBgDN3OzBzXM@cluster0.yq1jxon.mongodb.net/?retryWrites=true&w=majority")
   
   const meetupCollection = cliecnt.db("Sibal");
 
   const collection = meetupCollection.collection("meetups");
-  console.log(collection);
+  
+  const result = await collection.findOne({_id : ObjectId(meetupId) });
+  console.log(result);
 
   return {
     props : {
-      sibal : "Sibal"
+      sibal : {
+        id : result._id.toString(),
+        image : result.image,
+        title : result.title,
+        address : result.address,
+        description : result.description
+      }
     }
   };
 }
