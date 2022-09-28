@@ -44,7 +44,7 @@ export const getStaticPaths = async () => {
   console.log(test2)
 
   return {
-    fallback :  true , 
+    fallback :  "blocking" , 
     paths : result.map((item)=>({
       params : {meetupid : item._id.toString()},
     })),
